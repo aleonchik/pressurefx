@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="321.0" prefWidth="531.0"
+            xmlns="http://javafx.com/javafx/21.0.8"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="fx.pressurefx.controller.AddPressureController">
+   <left>
+      <VBox prefHeight="97.0" prefWidth="199.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="BOTTOM_RIGHT" contentDisplay="RIGHT"
+                   prefHeight="22.0" prefWidth="157.0" text="Имя:">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="20.0" top="15.0" />
+               </VBox.margin>
+            </Label>
+            <Label alignment="BOTTOM_RIGHT" prefHeight="21.0" prefWidth="159.0" text="SYS:">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="20.0" top="18.0" />
+               </VBox.margin>
+            </Label>
+            <Label alignment="BOTTOM_RIGHT" contentDisplay="RIGHT"
+                   prefHeight="22.0" prefWidth="157.0" text="DIA:">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="20.0" top="18.0" />
+               </VBox.margin>
+            </Label>
+            <Label alignment="BOTTOM_RIGHT" contentDisplay="RIGHT"
+                   prefHeight="22.0" prefWidth="157.0" text="Pulse:">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="20.0" top="18.0" />
+               </VBox.margin>
+            </Label>
+            <Label alignment="BOTTOM_RIGHT" contentDisplay="RIGHT"
+                   prefHeight="22.0" prefWidth="157.0" text="Дата:">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="20.0" top="18.0" />
+               </VBox.margin>
+            </Label>
+            <Label alignment="BOTTOM_RIGHT" contentDisplay="RIGHT"
+                   prefHeight="22.0" prefWidth="157.0" text="Время:">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="20.0" top="18.0" />
+               </VBox.margin>
+            </Label>
+         </children>
+      </VBox>
+   </left>
+   <right>
+      <VBox prefHeight="144.0" prefWidth="332.0" BorderPane.alignment="CENTER">
+         <children>
+            <TextField fx:id="txtName" editable="false" promptText="Имя">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets right="20.0" top="10.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="txtSys" promptText="SYS">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets right="20.0" top="10.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="txtDia" promptText="DIA">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets right="20.0" top="10.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="txtPulse" promptText="Pulse">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets right="20.0" top="10.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="txtDate" promptText="Дата">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets right="20.0" top="10.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="txtTime" promptText="Время">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets right="20.0" top="10.0" />
+               </VBox.margin>
+            </TextField>
+         </children>
+      </VBox>
+   </right>
+   <bottom>
+      <ButtonBar prefHeight="48.0" prefWidth="511.0" BorderPane.alignment="CENTER">
+        <buttons>
+          <Button fx:id="btnSave" mnemonicParsing="false" onAction="#btnSaveClick" text="Сохранить">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#btnCancelClick" text="Отмена">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+        </buttons>
+         <BorderPane.margin>
+            <Insets right="20.0" />
+         </BorderPane.margin>
+      </ButtonBar>
+   </bottom>
+</BorderPane>

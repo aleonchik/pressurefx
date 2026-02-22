@@ -3,11 +3,14 @@ package fx.pressurefx.controller;
 import fx.pressurefx.App;
 import fx.pressurefx.dao.DAOPatient;
 import fx.pressurefx.dao.DAOPatientImpl;
+import fx.pressurefx.dao.DAOPressure;
+import fx.pressurefx.dao.DAOPressureImpl;
 import fx.pressurefx.entity.Patient;
 import fx.pressurefx.entity.Pressure;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,28 +22,30 @@ import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.List;
 
 public class MainController {
 
     private App mainApp;
     private Stage primaryStage;
-    int id; // user id
-    ObservableList<Pressure> pressure = FXCollections.observableArrayList(
+    int userId; // user id
+    /*ObservableList<Pressure> pressure = FXCollections.observableArrayList(
             new Pressure(1, 1, 130, 80, 65, LocalDateTime.now()),
             new Pressure(2, 1, 131, 81, 66, LocalDateTime.now()),
             new Pressure(3, 1, 132, 82, 67, LocalDateTime.now()),
             new Pressure(4, 1, 133, 83, 68, LocalDateTime.now()),
             new Pressure(5, 1, 134, 84, 69, LocalDateTime.now())
-    );
+    );*/
+
+//    ObservableList<Pressure> pressure = FXCollections.observableArrayList();
+    ObservableList<Pressure> pressure;
 
     protected DAOPatient dao = new DAOPatientImpl();
+    protected DAOPressure daoPressure = new DAOPressureImpl();
 
     @FXML private ComboBox<Patient> cmbUser;
 
@@ -65,9 +70,13 @@ public class MainController {
     @FXML
     void initialize() {
         // Table
+        fillTable();
         tvPressure.setItems(pressure);
+
         colId.setCellValueFactory(new PropertyValueFactory<Pressure, Integer>("id"));
+
         colSys.setCellValueFactory(new PropertyValueFactory<Pressure, Integer>("sys"));
+
         colDia.setCellValueFactory(new PropertyValueFactory<Pressure, Integer>("dia"));
         colPulse.setCellValueFactory(new PropertyValueFactory<Pressure, Integer>("pulse"));
 
@@ -98,7 +107,7 @@ public class MainController {
             Patient p = cmbUser.getValue();
 
             if (p != null) {
-                id = p.id();
+                userId = p.id();
             }
         });
 
@@ -195,10 +204,14 @@ public class MainController {
         fillCombo();
     }
 
+    /**
+     * Редактирование пациента (пользователя)
+     * @throws IOException
+     */
     @FXML
     protected void btnEditClick() throws IOException {
 
-        if (id != 0) {
+        if (userId != 0) {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/fx/pressurefx/edit-user.fxml"));
 
@@ -214,7 +227,7 @@ public class MainController {
             EditUserController controller = loader.getController();
 
             // Получим данные пользователя для редактирования
-            Patient patient = dao.getOne(id);
+            Patient patient = dao.getOne(userId);
             // Передадим в контроллер
             controller.fillData(patient.id(), patient.name(), patient.birthday());
 
@@ -224,7 +237,10 @@ public class MainController {
 
             stage.showAndWait();
 
-            fillCombo();
+            if (controller.isSaveClick()) {
+                fillCombo();
+            }
+
         }
     }
 
@@ -233,8 +249,59 @@ public class MainController {
      */
     @FXML
     protected void btnDelClick() {
-        dao.delete(id);
-        fillCombo();
+        if (userId != 0) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Удаление");
+            alert.setHeaderText("Удаление");
+            alert.setContentText("Действительно хотите удалить запись?");
+
+            if (alert.showAndWait().get() == ButtonType.OK) {
+                dao.delete(userId);
+                fillCombo();
+            }
+        }
 //        cmbUser.getSelectionModel().select(0);
+    }
+
+    /**
+     * Наполним таблицу данными...
+     */
+    public void fillTable() {
+        DAOPressure dao = new DAOPressureImpl();
+
+        List<Pressure> lp = dao.getAll(1, 100);
+        pressure = FXCollections.observableArrayList(lp);
+    }
+
+    /**
+     * Добавим давление пользователя
+     * @param actionEvent
+     */
+    public void btnAddPressure(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/fx/pressurefx/add-pressure.fxml"));
+
+        Scene scene = new Scene(loader.load());
+        Stage stage = new Stage();
+        stage.setScene(scene);
+
+        stage.initModality(Modality.WINDOW_MODAL);
+        Parent root = loader.getRoot();
+        stage.initOwner(primaryStage);
+        stage.setTitle("Редактирование");
+
+        AddPressureController controller = loader.getController();
+
+        // Получим данные пользователя для редактирования
+        Patient patient = dao.getOne(userId);
+        // Передадим в контроллер
+//        controller.fillData(patient.id(), patient.name(), patient.birthday());
+
+//        controller.setAddUserStage(stage);
+//        controller.setMainApp(mainApp);
+//        controller.setPrimaryStage(primaryStage);
+
+        stage.showAndWait();
+
     }
 }

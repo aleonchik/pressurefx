@@ -20,18 +20,27 @@ public class EditUserController {
     private App mainApp;
     private Stage primaryStage;
     private Stage editUserStage;
+    private boolean saveClick = false; // нажали кнопку созранить
 
     @FXML
     private TextField txtName;
 
     @FXML
-    private DatePicker tdDate;
+    private DatePicker dtDate;
 
     @FXML
     private Button btnSave;
 
     @FXML
     private Button btnCancel;
+
+    /**
+     * Кликнули по кнопке сохранить?
+     * @return
+     */
+    public boolean isSaveClick() {
+        return  saveClick;
+    }
 
     /**
      * Устанавливается ссылка на основную программу
@@ -56,15 +65,17 @@ public class EditUserController {
     }
 
     /**
-     * Клие по кнопке Сохранить
+     * Клик по кнопке Сохранить
      */
     @FXML
     protected void btnSaveClick(ActionEvent actionEvent) {
         String name = txtName.getText().trim();
-        LocalDate birth = tdDate.getValue();
-
+        LocalDate birth = dtDate.getValue();
         Patient p = new Patient(id, name, birth);
+
         dao.update(p);
+
+        saveClick = true;
         btnCancelClick();
     }
 
@@ -76,7 +87,6 @@ public class EditUserController {
 //        addUserStage.close();
         Stage stage = (Stage) btnCancel.getScene().getWindow();
         stage.close();
-
     }
 
     /**
@@ -88,6 +98,6 @@ public class EditUserController {
     public void fillData(int id, String name, LocalDate dt) {
         this.id = id;
         txtName.setText(name);
-        tdDate.setValue(dt);
+        dtDate.setValue(dt);
     }
 }

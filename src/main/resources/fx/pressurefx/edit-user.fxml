@@ -48,7 +48,7 @@
                   <Insets right="20.0" top="10.0" />
                </VBox.margin>
             </TextField>
-            <DatePicker fx:id="tdDate" prefHeight="28.0" prefWidth="315.0">
+            <DatePicker fx:id="dtDate" prefHeight="28.0" prefWidth="315.0">
                <VBox.margin>
                   <Insets right="20.0" top="10.0" />
                </VBox.margin>
